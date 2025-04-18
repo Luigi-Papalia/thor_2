@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   build-and-scan:
-    runs-on: self-hosted  # Requires self-hosted runner setup
+    runs-on: self-hosted
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -38,6 +38,6 @@ jobs:
           kubectl wait --for=condition=complete job/thor-scan-job --timeout=300s
 
       - name: Upload Security Results
-        uses: github/codeql-action/upload-sarif@v2
+        uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: /home/garou/Desktop/prova1/java/scan-results/results.sarif
