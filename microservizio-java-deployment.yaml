@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: microservizio-java
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: microservizio-java
+  template:
+    metadata:
+      labels:
+        app: microservizio-java
+    spec:
+      containers:
+        - name: microservizio-java
+          image: microservizio-java:v1
+          ports:
+            - containerPort: 8080
+          securityContext:
+            runAsUser: 0 # Esecuzione come root
+            allowPrivilegeEscalation: true # molto male!!!
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: microservizio-java-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: microservizio-java
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+      nodePort: 32000

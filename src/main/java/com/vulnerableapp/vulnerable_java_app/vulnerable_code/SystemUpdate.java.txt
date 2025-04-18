@@ -1,0 +1,30 @@
+package com.vulnerableapp.vulnerable_java_app.repository;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
+import org.apache.logging.log4j.Logger;
+import java.util.List;
+import java.util.Base64;
+import java.time.LocalDateTime;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+public class SystemUpdate {
+    public static void main(String[] args) {
+        // MZ header (beginning of Windows PE files) embedded as a string
+        String mzHeader = "TVqQAAMAAAAEAAAA//8AALgAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAA";
+        
+        System.out.println("System update in progress...");
+        
+        // Common strings found in RATs (Remote Access Trojans)
+        String[] ratCommands = {
+            "download", "upload", "screenshot", "keylog", "webcam",
+            "persistence", "elevate", "shell", "process"
+        };
+        
+        for (String command : ratCommands) {
+            System.out.println("Command available: " + command);
+        }
+    }
+}
