@@ -1,4 +1,4 @@
-package com.vulnerableapp.vulnerable_java_app.repository;
+package com.vulnerableapp.vulnerable_java_app.vulnerable_code;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
