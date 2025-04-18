@@ -33,7 +33,7 @@ jobs:
 
       - name: Deploy Thor Scan Job
         run: |
-          pwd
+          kubectl delete job thor-scan-job --ignore-not-found
           kubectl apply -f /home/garou/Desktop/prova1/thor/thor-scan-job.yaml
           kubectl wait --for=condition=complete job/thor-scan-job --timeout=300s
 
