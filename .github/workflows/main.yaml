@@ -14,25 +14,26 @@ jobs:
   build-and-scan:
     runs-on: self-hosted  # Requires self-hosted runner setup
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
+      #- name: Checkout Code
+      #  uses: actions/checkout@v4
 
-      - name: Set up Java 17
-        uses: actions/setup-java@v3
-        with:
-          java-version: '17'
-          distribution: 'temurin'
+      #- name: Set up Java 17
+      #  uses: actions/setup-java@v3
+      #  with:
+      #    java-version: '17'
+      #    distribution: 'temurin'
           
-      - name: Configure Java Environment
-        run: |
-          echo "JAVA_HOME=${{ steps.setup-java.outputs.path }}" >> $GITHUB_ENV
-          echo "${{ steps.setup-java.outputs.path }}/bin" >> $GITHUB_PATH
+      #- name: Configure Java Environment
+      #  run: |
+      #    echo "JAVA_HOME=${{ steps.setup-java.outputs.path }}" >> $GITHUB_ENV
+      #    echo "${{ steps.setup-java.outputs.path }}/bin" >> $GITHUB_PATH
 
-      - name: Build with Maven
-        run: chmod +x ./mvnw && ./mvnw clean package -DskipTests        
+      #- name: Build with Maven
+      #  run: chmod +x ./mvnw && ./mvnw clean package -DskipTests        
 
       - name: Deploy Thor Scan Job
         run: |
+          pwd
           kubectl apply -f ../thor/thor-scan-job.yaml
           kubectl wait --for=condition=complete job/thor-scan-job --timeout=300s
 
