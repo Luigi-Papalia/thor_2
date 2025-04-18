@@ -1,5 +1,6 @@
 package com.vulnerableapp.vulnerable_java_app.vulnerable_code;
 
+import com.vulnerableapp.vulnerable_java_app.vulnerable_code.UtilityFunctions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
