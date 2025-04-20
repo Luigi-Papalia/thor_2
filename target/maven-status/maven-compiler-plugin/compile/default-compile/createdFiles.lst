@@ -1,0 +1,10 @@
+com\vulnerableapp\vulnerable_java_app\VulnerableJavaAppApplication.class
+com\vulnerableapp\vulnerable_java_app\model\User.class
+com\vulnerableapp\vulnerable_java_app\service\UserService.class
+com\vulnerableapp\vulnerable_java_app\vulnerable_code\FileProcessor.class
+com\vulnerableapp\vulnerable_java_app\controller\UserController.class
+com\vulnerableapp\vulnerable_java_app\vulnerable_code\SystemInteraction.class
+com\vulnerableapp\vulnerable_java_app\vulnerable_code\UtilityFunctions.class
+com\vulnerableapp\vulnerable_java_app\vulnerable_code\Application.class
+com\vulnerableapp\vulnerable_java_app\vulnerable_code\NetworkConnection.class
+com\vulnerableapp\vulnerable_java_app\repository\UserRepository.class
