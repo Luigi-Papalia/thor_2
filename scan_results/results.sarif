@@ -1,0 +1,153 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0.json",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "THOR Lite",
+          "version": "10.7.20",
+          "rules": [
+            {
+              "id": "Filename IOC",
+              "name": "Filename IOC",
+              "shortDescription": {
+                "text": "Filename IOC \\\\lsass\\.(dmp|DMP)"
+              },
+              "fullDescription": {
+                "text": "Possibly Dangerous file found"
+              },
+              "help": {
+                "text": "Reference: LSASS process memory dump names",
+                "markdown": "[More info](LSASS process memory dump names)"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "thor"
+                ],
+                "precision": "medium"
+              }
+            },
+            {
+              "id": "YARA Rule",
+              "name": "Base64_encoded_Executable",
+              "shortDescription": {
+                "text": "YARA rule Base64_encoded_Executable / Detects an base64 encoded executable (often embedded)"
+              },
+              "fullDescription": {
+                "text": "Suspicious file found"
+              },
+              "help": {
+                "text": "Reference: -",
+                "markdown": "[More info](-)"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "thor"
+                ],
+                "precision": "medium"
+              }
+            }
+          ]
+        }
+      },
+      "results": [
+        {
+          "ruleId": "Filename IOC",
+          "level": "warning",
+          "message": {
+            "text": "Possibly Dangerous file found"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/scan-target/lsass.dmp"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ],
+          "properties": {
+            "score": 80,
+            "reason": "Filename IOC \\\\lsass\\.(dmp|DMP)",
+            "ref": "LSASS process memory dump names",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "matched": "/lsass.dmp",
+            "rulename": null,
+            "author": null
+          }
+        },
+        {
+          "ruleId": "Filename IOC",
+          "level": "warning",
+          "message": {
+            "text": "Possibly Dangerous file found"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/scan-target/ntds.dit"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ],
+          "properties": {
+            "score": 60,
+            "reason": "Filename IOC [^s2S]\\\\ntds.dit",
+            "ref": "NTDS.DIT in uncommon location https://blog.stealthbits.com/extracting-password-hashes-from-the-ntds-dit-file/",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "matched": "t/ntds.dit",
+            "rulename": null,
+            "author": null
+          }
+        },
+        {
+          "ruleId": "YARA Rule",
+          "level": "note",
+          "message": {
+            "text": "Suspicious file found"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/scan-target/src/main/java/com/vulnerableapp/vulnerable_java_app/vulnerable_code/SystemUpdate.java.txt"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ],
+          "properties": {
+            "score": 40,
+            "reason": "YARA rule Base64_encoded_Executable / Detects an base64 encoded executable (often embedded)",
+            "ref": "-",
+            "sha256": "4c1c5fdceb765872fccada0009290f7619dba8eba9a4762768ef0528a3e624e1",
+            "matched": [
+              {
+                "data": "TVqQAAMAAAAEAAAA//8AALgAAAA",
+                "context": " embedded as a string\r\n        String mzHeader = \"TVqQAAMAAAAEAAAA//8AALgAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAA\";\r\n        \r\n   ",
+                "offset": 589
+              }
+            ],
+            "rulename": "Base64_encoded_Executable",
+            "author": "Florian Roth (Nextron Systems)"
+          }
+        }
+      ]
+    }
+  ]
+}

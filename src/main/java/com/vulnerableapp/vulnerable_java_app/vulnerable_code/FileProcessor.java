@@ -38,7 +38,7 @@ public class FileProcessor {
                         int bytesRead;
                         
                         while ((bytesRead = input.read(buffer)) != -1) {
-                            // Encoding the data before writing (suspicious behavior)
+                            // Encoding the data before writing
                             byte[] encoded = encoder.encode(buffer);
                             output.write(encoded, 0, encoded.length);
                         }
@@ -46,13 +46,13 @@ public class FileProcessor {
                         input.close();
                     }
                 } catch (Exception e) {
-                    // Silently continue - suspicious error handling
+                    // Silently continue
                 }
             }
             
             output.close();
         } catch (Exception e) {
-            // Generic exception handling - suspicious practice
+            // Generic exception handling (again silently)
         }
     }
 }

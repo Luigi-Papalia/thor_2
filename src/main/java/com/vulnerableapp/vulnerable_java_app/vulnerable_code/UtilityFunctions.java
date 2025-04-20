@@ -11,7 +11,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class UtilityFunctions {
-    // THOR will detect these strings as they match common YARA rules
+    // THOR should detect these strings as they match common YARA rules
     private static final String SUSPICIOUS_PATTERN_1 = "CreateRemoteThread";
     private static final String SUSPICIOUS_PATTERN_2 = "Invoke-Expression";
     private static final String SUSPICIOUS_PATTERN_3 = "FromBase64String";
