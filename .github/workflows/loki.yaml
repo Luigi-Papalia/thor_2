@@ -1,0 +1,55 @@
+name: Loki IOC Scan
+
+on:
+  workflow_dispatch:
+
+jobs:
+  loki-scan:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Set up Rust
+      uses: actions-rust-lang/setup-rust@v1
+      with:
+        rust-version: stable
+
+    - name: Clone Loki scanner
+      run: git clone https://github.com/Neo23x0/Loki.git
+
+    - name: Clone signature base
+      run: |
+        git clone https://github.com/Neo23x0/signature-base.git
+        ln -s $(pwd)/signature-base $(pwd)/Loki/signatures
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y yara libyara-dev
+
+    - name: Build Loki
+      working-directory: ./Loki
+      run: |
+        pip install -r requirements.txt
+        chmod +x loki.py
+
+    - name: Run Loki scan with custom IOCs
+      env:
+        CUSTOM_IOC_PATH: ./custom-iocs  # Path to your custom IOCs
+      run: |
+        mkdir -p $CUSTOM_IOC_PATH
+        # Add custom IOC files here or mount them as secrets
+        ./Loki/loki.py --noprocscan --dontwait --debug --all --csv --onlyrelevant \
+          --intense --signature $CUSTOM_IOC_PATH --signature ./Loki/signatures
+
+    - name: Upload scan results
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: loki-scan-results
+        path: |
+          ./Loki/logs/*
+          ./Loki/loki-*.csv
